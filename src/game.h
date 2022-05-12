@@ -27,7 +27,7 @@ class Game {
   bool running;
 
   SDL_Window* window;
-  SDL_Surface* surface;
+  SDL_Renderer* renderer;
 };
 
 #endif
