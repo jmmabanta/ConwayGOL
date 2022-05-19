@@ -1,8 +1,8 @@
 #include "game.h"
-#include "experiments/test_texture.h"
 
 #include <iostream>
-#include <memory>
+
+#include "experiments/test_texture.h"
 
 Game::Game(const char* title, const int width, const int height)
     : title(title),

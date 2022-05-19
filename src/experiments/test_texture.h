@@ -4,14 +4,14 @@
 #include <SDL2/SDL_image.h>
 
 class TestTexture {
-  public:
-    TestTexture(SDL_Renderer* renderer,const char* path);
-    ~TestTexture();
+ public:
+  TestTexture(SDL_Renderer* renderer, const char* path);
+  ~TestTexture();
 
-    SDL_Texture* getTexture() const;
+  SDL_Texture* getTexture() const;
 
-  private:
-    SDL_Texture* texture;
+ private:
+  SDL_Texture* texture;
 };
 
 #endif

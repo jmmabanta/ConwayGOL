@@ -2,6 +2,7 @@
 #define CONWAYGOL_GAME_H_
 
 #include <SDL2/SDL.h>
+
 #include "experiments/test_texture.h"
 
 class Game {
