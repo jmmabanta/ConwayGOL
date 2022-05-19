@@ -8,20 +8,35 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_OSX_ARCHITECTURES "arm64")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
-find_library(SDL2_LIBRARY NAME SDL2 REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 find_package(OpenGL REQUIRED)
 
-include_directories(ConwayGOL ${SDL2_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR})
+set(INCLUDE_DIRECTORIES
+  ${SDL2_INCLUDE_DIRS}
+  ${SDL2_IMAGE_INCLUDE_DIRS}
+  ${OPENGL_INCLUDE_DIRS}
+)
+
+set(LINK_LIBRARIES
+  ${SDL2_LIBRARIES}
+  ${SDL2_IMAGE_LIBRARIES}
+  ${OPENGL_LIBRARIES}
+)
+
+include_directories(ConwayGOL ${INCLUDE_DIRECTORIES})
 
 set(SOURCES
   src/main.cc
   src/game.cc
+  src/experiments/test_texture.cc
 )
 
 add_executable(ConwayGOL ${SOURCES})
 
-target_link_libraries(ConwayGOL ${SDL2_LIBRARY} ${OPENGL_LIBRARIES})
+target_link_libraries(ConwayGOL ${LINK_LIBRARIES})
 
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
