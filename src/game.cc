@@ -1,5 +1,4 @@
 #include "game.h"
-#include "SDL_render.h"
 #include "experiments/test_texture.h"
 
 #include <iostream>
