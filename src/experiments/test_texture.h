@@ -3,6 +3,8 @@
 
 #include <SDL2/SDL_image.h>
 
+#include <memory>
+
 class TestTexture {
  public:
   TestTexture(SDL_Renderer* renderer, const char* path);
@@ -11,7 +13,7 @@ class TestTexture {
   SDL_Texture* getTexture() const;
 
  private:
-  SDL_Texture* texture;
+  std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> texture;
 };
 
 #endif

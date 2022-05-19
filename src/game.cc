@@ -9,20 +9,17 @@ Game::Game(const char* title, const int width, const int height)
       width(width),
       height(height),
       running(false),
-      window(nullptr),
-      renderer(nullptr),
-      testTexture(nullptr) {}
+      window(nullptr, SDL_DestroyWindow),
+      renderer(nullptr, SDL_DestroyRenderer),
+      testTexture(nullptr),
+      e() {}
 
 Game::~Game() {
   std::cout << "Destroying Game...\n";
-  delete testTexture;
 
   // running should be false here
   if (running) std::cerr << "Something went wrong here!!!\n";
 
-  // Deallocate SDL Related Memory
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
   SDL_Quit();
 }
 
@@ -34,9 +31,9 @@ bool Game::init() {
   }
 
   // Initialize Window
-  window =
-      SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                       width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+  window.reset(SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED,
+                                SDL_WINDOWPOS_CENTERED, width, height,
+                                SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN));
   if (window == NULL) {
     std::cerr << "Window failed to initialize! ERROR: " << SDL_GetError()
               << '\n';
@@ -44,19 +41,37 @@ bool Game::init() {
   }
 
   // Initialize Renderer
-  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  renderer.reset(
+      SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED));
   if (renderer == NULL) {
     std::cerr << "Renderer failed to initialize! ERROR: " << SDL_GetError()
               << '\n';
     return false;
   }
 
-  SDL_SetRenderDrawColor(renderer, 25, 25, 25, SDL_ALPHA_OPAQUE);
+  SDL_SetRenderDrawColor(renderer.get(), 25, 25, 25, SDL_ALPHA_OPAQUE);
 
   // Initialize Test Texture
-  testTexture = new TestTexture(renderer, "assets/test.png");
+  testTexture =
+      std::make_unique<TestTexture>(renderer.get(), "assets/test.png");
 
   return true;
+}
+
+void Game::handleEvents() {
+  while (SDL_PollEvent(&e)) {
+    if (e.type == SDL_QUIT) running = false;
+  }
+}
+
+void Game::update() {
+  // TODO: Implement this
+}
+
+void Game::render() {
+  SDL_RenderClear(renderer.get());
+  SDL_RenderCopy(renderer.get(), testTexture->getTexture(), NULL, NULL);
+  SDL_RenderPresent(renderer.get());
 }
 
 void Game::run() {
@@ -69,11 +84,8 @@ void Game::run() {
   // Handle SDL Events
   SDL_Event e;
   while (running) {
-    while (SDL_PollEvent(&e) != 0) {
-      if (e.type == SDL_QUIT) running = false;
-    }
-    SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, testTexture->getTexture(), NULL, NULL);
-    SDL_RenderPresent(renderer);
+    handleEvents();
+    update();
+    render();
   }
 }

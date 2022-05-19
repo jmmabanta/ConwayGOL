@@ -3,6 +3,8 @@
 
 #include <SDL2/SDL.h>
 
+#include <memory>
+
 #include "experiments/test_texture.h"
 
 class Game {
@@ -18,6 +20,24 @@ class Game {
   bool init();
 
   /**
+   * @brief Handle's SDL events (user inputs)
+   *
+   */
+  void handleEvents();
+
+  /**
+   * @brief Updates game logic
+   *
+   */
+  void update();
+
+  /**
+   * @brief Renders the game to the screen
+   *
+   */
+  void render();
+
+  /**
    * @brief Run's the game loop
    *
    */
@@ -28,9 +48,11 @@ class Game {
   const int width, height;
   bool running;
 
-  SDL_Window* window;
-  SDL_Renderer* renderer;
-  TestTexture* testTexture;
+  SDL_Event e;
+
+  std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window;
+  std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> renderer;
+  std::unique_ptr<TestTexture> testTexture;
 };
 
 #endif
