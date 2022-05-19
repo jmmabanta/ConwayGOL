@@ -4,6 +4,7 @@
 
 # MacOS Cringe
 *.DS_STORE
+*.cache
 
 ### C++ ###
 # Prerequisites

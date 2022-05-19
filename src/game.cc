@@ -1,6 +1,9 @@
 #include "game.h"
+#include "SDL_render.h"
+#include "experiments/test_texture.h"
 
 #include <iostream>
+#include <memory>
 
 Game::Game(const char* title, const int width, const int height)
     : title(title),
@@ -8,10 +11,12 @@ Game::Game(const char* title, const int width, const int height)
       height(height),
       running(false),
       window(nullptr),
-      renderer(nullptr) {}
+      renderer(nullptr),
+      testTexture(nullptr) {}
 
 Game::~Game() {
   std::cout << "Destroying Game...\n";
+  delete testTexture;
 
   // running should be false here
   if (running) std::cerr << "Something went wrong here!!!\n";
@@ -47,7 +52,10 @@ bool Game::init() {
     return false;
   }
 
-  SDL_SetRenderDrawColor(renderer, 50, 50, 50, SDL_ALPHA_OPAQUE);
+  SDL_SetRenderDrawColor(renderer, 25, 25, 25, SDL_ALPHA_OPAQUE);
+
+  // Initialize Test Texture
+  testTexture = new TestTexture(renderer, "assets/test.png");
 
   return true;
 }
@@ -66,6 +74,7 @@ void Game::run() {
       if (e.type == SDL_QUIT) running = false;
     }
     SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, testTexture->getTexture(), NULL, NULL);
     SDL_RenderPresent(renderer);
   }
 }
