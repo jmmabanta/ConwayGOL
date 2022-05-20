@@ -41,8 +41,10 @@ bool Game::init() {
   }
 
   // Initialize Renderer
-  renderer.reset(SDL_CreateRenderer(
-      window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
+  renderer.reset(
+      SDL_CreateRenderer(window.get(), -1,
+                         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC),
+      SDL_DestroyRenderer);
   if (renderer == NULL) {
     std::cerr << "Renderer failed to initialize! ERROR: " << SDL_GetError()
               << '\n';
@@ -52,8 +54,7 @@ bool Game::init() {
   SDL_SetRenderDrawColor(renderer.get(), 25, 25, 25, SDL_ALPHA_OPAQUE);
 
   // Initialize Test Texture
-  testTexture =
-      std::make_unique<TestTexture>(renderer.get(), "assets/test.png");
+  testTexture = std::make_unique<TestTexture>(renderer, "assets/test.png");
 
   return true;
 }

@@ -7,7 +7,7 @@
 
 class TestTexture {
  public:
-  TestTexture(SDL_Renderer* renderer, const char* path);
+  TestTexture(std::shared_ptr<SDL_Renderer> renderer, const char* path);
   ~TestTexture();
 
   SDL_Texture* getTexture() const;

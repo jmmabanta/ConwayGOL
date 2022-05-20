@@ -51,7 +51,7 @@ class Game {
   SDL_Event e;
 
   std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window;
-  std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> renderer;
+  std::shared_ptr<SDL_Renderer> renderer;
   std::unique_ptr<TestTexture> testTexture;
 };
 

@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-TestTexture::TestTexture(SDL_Renderer* renderer, const char* path)
+TestTexture::TestTexture(std::shared_ptr<SDL_Renderer> renderer,
+                         const char* path)
     : texture(nullptr, SDL_DestroyTexture) {
   SDL_Surface* loadedSurface = IMG_Load(path);
 
@@ -10,7 +11,7 @@ TestTexture::TestTexture(SDL_Renderer* renderer, const char* path)
     std::cerr << "Unable to load image at: " << path
               << " | ERROR: " << SDL_GetError() << '\n';
   } else {
-    texture.reset(SDL_CreateTextureFromSurface(renderer, loadedSurface));
+    texture.reset(SDL_CreateTextureFromSurface(renderer.get(), loadedSurface));
     if (texture == NULL) {
       std::cerr << "Unable to create texture from: " << path
                 << " | ERROR: " << SDL_GetError() << '\n';
