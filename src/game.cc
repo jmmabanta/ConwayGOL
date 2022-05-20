@@ -41,8 +41,8 @@ bool Game::init() {
   }
 
   // Initialize Renderer
-  renderer.reset(
-      SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED));
+  renderer.reset(SDL_CreateRenderer(
+      window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
   if (renderer == NULL) {
     std::cerr << "Renderer failed to initialize! ERROR: " << SDL_GetError()
               << '\n';
