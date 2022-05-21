@@ -3,18 +3,16 @@
 #include <iostream>
 #include <memory>
 
-#include "experiments/test_texture.h"
-#include "grid/cell.h"
+#include "grid/grid.h"
 
 Game::Game(const char* title, const int width, const int height)
     : title(title),
       width(width),
       height(height),
       running(false),
+      grid(nullptr),
       window(nullptr, SDL_DestroyWindow),
-      renderer(nullptr, SDL_DestroyRenderer),
-      test_texture(nullptr),
-      test_cell(nullptr) {}
+      renderer(nullptr, SDL_DestroyRenderer) {}
 
 Game::~Game() {
   std::cout << "Destroying Game...\n";
@@ -53,13 +51,8 @@ bool Game::init() {
     return false;
   }
 
-  SDL_SetRenderDrawColor(renderer.get(), 25, 25, 25, SDL_ALPHA_OPAQUE);
-
-  // Initialize Test Texture
-  test_texture = std::make_unique<TestTexture>(renderer, "assets/test.png");
-
-  // Initialize Test Cell
-  test_cell = std::make_unique<Cell>(50, 50, 25, renderer);
+  // Initialize Grid
+  grid = std::make_unique<Grid>(renderer, width, height, 25, 2);
 
   return true;
 }
@@ -75,10 +68,11 @@ void Game::update() {
 }
 
 void Game::render() {
-  SDL_RenderClear(renderer.get());
-  SDL_RenderCopy(renderer.get(), test_texture->getTexture(), NULL, NULL);
+  SDL_SetRenderDrawColor(renderer.get(), 25, 25, 25, SDL_ALPHA_OPAQUE);
 
-  test_cell->render();
+  SDL_RenderClear(renderer.get());
+
+  grid->render();
 
   SDL_RenderPresent(renderer.get());
 }

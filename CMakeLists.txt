@@ -32,7 +32,7 @@ set(SOURCES
   src/main.cc
   src/game.cc
   src/grid/cell.cc
-  src/experiments/test_texture.cc
+  src/grid/grid.cc
 )
 
 add_executable(ConwayGOL ${SOURCES})

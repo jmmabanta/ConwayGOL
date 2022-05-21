@@ -5,8 +5,7 @@
 
 #include <memory>
 
-#include "experiments/test_texture.h"
-#include "grid/cell.h"
+#include "grid/grid.h"
 
 class Game {
  public:
@@ -49,13 +48,13 @@ class Game {
   const int width, height;
   bool running;
 
+  std::unique_ptr<Grid> grid;
+
   SDL_Event e;
 
   std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window;
   std::shared_ptr<SDL_Renderer> renderer;
-  std::unique_ptr<TestTexture> test_texture;
 
-  std::unique_ptr<Cell> test_cell;
 };
 
 #endif

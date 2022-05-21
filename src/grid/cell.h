@@ -41,7 +41,7 @@ class Cell {
    * @brief Renders the grid cell to the screen
    *
    */
-  void render();
+  void render() const;
 
  private:
   Coordinates coordinates;

@@ -38,7 +38,7 @@ const bool Cell::getIsAlive() const { return is_alive; }
 
 void Cell::toggleAlive() { is_alive = !is_alive; }
 
-void Cell::render() {
+void Cell::render() const {
   if (is_alive)
     SDL_SetRenderDrawColor(renderer.get(), ALIVE_COL, ALIVE_COL, ALIVE_COL,
                            255);
