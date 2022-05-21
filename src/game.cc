@@ -84,8 +84,7 @@ void Game::run() {
     return;
   }
 
-  // Handle SDL Events
-  SDL_Event e;
+  // Game Loop
   while (running) {
     handleEvents();
     update();
