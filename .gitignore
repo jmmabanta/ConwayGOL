@@ -6,6 +6,9 @@
 *.DS_STORE
 *.cache
 
+# Vim stuff
+*.swp
+
 ### C++ ###
 # Prerequisites
 *.d
