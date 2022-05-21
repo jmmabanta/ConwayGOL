@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "experiments/test_texture.h"
+#include "grid/cell.h"
 
 class Game {
  public:
@@ -52,7 +53,9 @@ class Game {
 
   std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window;
   std::shared_ptr<SDL_Renderer> renderer;
-  std::unique_ptr<TestTexture> testTexture;
+  std::unique_ptr<TestTexture> test_texture;
+
+  std::unique_ptr<Cell> test_cell;
 };
 
 #endif

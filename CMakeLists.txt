@@ -31,6 +31,7 @@ include_directories(ConwayGOL ${INCLUDE_DIRECTORIES})
 set(SOURCES
   src/main.cc
   src/game.cc
+  src/grid/cell.cc
   src/experiments/test_texture.cc
 )
 

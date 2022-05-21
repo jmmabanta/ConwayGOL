@@ -1,8 +1,10 @@
 #include "game.h"
 
 #include <iostream>
+#include <memory>
 
 #include "experiments/test_texture.h"
+#include "grid/cell.h"
 
 Game::Game(const char* title, const int width, const int height)
     : title(title),
@@ -11,8 +13,8 @@ Game::Game(const char* title, const int width, const int height)
       running(false),
       window(nullptr, SDL_DestroyWindow),
       renderer(nullptr, SDL_DestroyRenderer),
-      testTexture(nullptr),
-      e() {}
+      test_texture(nullptr),
+      test_cell(nullptr) {}
 
 Game::~Game() {
   std::cout << "Destroying Game...\n";
@@ -54,7 +56,10 @@ bool Game::init() {
   SDL_SetRenderDrawColor(renderer.get(), 25, 25, 25, SDL_ALPHA_OPAQUE);
 
   // Initialize Test Texture
-  testTexture = std::make_unique<TestTexture>(renderer, "assets/test.png");
+  test_texture = std::make_unique<TestTexture>(renderer, "assets/test.png");
+
+  // Initialize Test Cell
+  test_cell = std::make_unique<Cell>(50, 50, 25, renderer);
 
   return true;
 }
@@ -71,7 +76,10 @@ void Game::update() {
 
 void Game::render() {
   SDL_RenderClear(renderer.get());
-  SDL_RenderCopy(renderer.get(), testTexture->getTexture(), NULL, NULL);
+  SDL_RenderCopy(renderer.get(), test_texture->getTexture(), NULL, NULL);
+
+  test_cell->render();
+
   SDL_RenderPresent(renderer.get());
 }
 
