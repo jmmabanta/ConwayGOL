@@ -22,12 +22,15 @@ class Cell {
   /**
    * @brief Returns an immutable struct of a cell's top-left coordinate
    *
+   * @return A Coordinates instance of a struct representing the top-left of a
+   * cell
    */
   const Coordinates getCoordinates() const;
 
   /**
-   * @brief Returns the status of a cell (true = alive)
+   * @brief Returns the status of a cell
    *
+   * @return True when a cell is alive
    */
   const bool getIsAlive() const;
 
