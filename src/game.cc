@@ -59,7 +59,11 @@ bool Game::init() {
 
 void Game::handleEvents() {
   while (SDL_PollEvent(&e)) {
+    const Uint8* key_state = SDL_GetKeyboardState(NULL);
     if (e.type == SDL_QUIT) running = false;
+    else if (key_state[SDL_SCANCODE_ESCAPE])
+      running = false;
+    grid->handleMouseClick(e);
   }
 }
 

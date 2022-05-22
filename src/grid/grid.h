@@ -22,10 +22,22 @@ class Grid {
   const std::vector<std::vector<Cell>>& getCellGrid() const;
 
   /**
+   * @brief Toggles a cell's state on mouse click
+   *
+   */
+  void handleMouseClick(SDL_Event& e);
+
+  /**
+   * @brief Updates grid state
+   *
+   */
+  void update();
+
+  /**
    * @brief Renders the cell grid to the screen
    *
    */
-  void render();
+  void render() const;
 
  private:
   /**
