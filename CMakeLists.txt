@@ -39,6 +39,4 @@ add_executable(ConwayGOL ${SOURCES})
 
 target_link_libraries(ConwayGOL ${LINK_LIBRARIES})
 
-file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
-
 include(CPack)
