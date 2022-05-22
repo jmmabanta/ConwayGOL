@@ -14,7 +14,8 @@ Grid::Grid(std::shared_ptr<SDL_Renderer> renderer, int width, int height,
       width(width),
       height(height),
       cell_size(cell_size),
-      border_size(border_size) {
+      border_size(border_size),
+      simulating(false) {
   num_cells_x = (width - border_size) / (cell_size + border_size) + 1;
   num_cells_y = (height - border_size) / (cell_size + border_size) + 1;
 
@@ -38,19 +39,19 @@ Grid::Grid(std::shared_ptr<SDL_Renderer> renderer, int width, int height,
 Grid::~Grid() {
   // TODO: Implement Later
   std::cout << "Destroying grid...\n";
+  simulating = false;
 }
 
-const std::vector<std::vector<Cell>>& Grid::getCellGrid() const {
-  return cell_grid;
+void Grid::handleEvents(const SDL_Event& e) {
+  handleMouseClick(e);
+  handleKeyboard(e);
 }
 
-void Grid::handleMouseClick(SDL_Event& e) {
+void Grid::handleMouseClick(const SDL_Event& e) {
   if (e.type == SDL_MOUSEBUTTONDOWN) {
-    // Mouse position
+    // Get Mouse position
     int x, y;
     SDL_GetMouseState(&x, &y);
-
-    std::cout << "Mouse Pos: (" << x << ", " << y << ")\n";
 
     // Toggle cell
     Cell& cell = getCell(x, y);
@@ -58,8 +59,17 @@ void Grid::handleMouseClick(SDL_Event& e) {
   }
 }
 
+void Grid::handleKeyboard(const SDL_Event& e) {
+  if (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_SPACE) {
+    simulating = !simulating;
+    std::cout << "IS SIMULATING?: " << simulating << '\n';
+  }
+}
+
 void Grid::update() {
-  // TODO: Implement Conway's Game of Life logic here
+  if (simulating) {
+    // TODO: Implement Conway's Game of Life logic here
+  }
 }
 
 void Grid::render() const {
