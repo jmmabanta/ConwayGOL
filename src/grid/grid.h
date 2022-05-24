@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "cell.h"
+#include "coordinates.h"
 
 class Grid {
  public:
@@ -50,13 +51,32 @@ class Grid {
   void handleKeyboard(const SDL_Event& e);
 
   /**
+   * @brief Returns a cell's grid index at a given screen (x, y)
+   *
+   * @param x x coordinate from screen
+   * @param y y coordinate from screen
+   * @returns Coordinates {grid_x, grid_y} corresponding to a cell's index in
+   * grid
+   */
+  Coordinates getGridCoord(int x, int y);
+
+  /**
    * @brief Returns a reference to the cell object at these coordinates
    *
-   * @param x x coordinate
-   * @param y y coordinate
-   * @return A reference to the cell at {x, y}
+   * @param x x coordinate from screen
+   * @param y y coordinate from screen
+   * @return A reference to the cell at index [grid_x][grid_y]
    */
   Cell& getCell(int x, int y);
+
+  /**
+   * @brief Counts the number of alive cells adjacent to a cell
+   *
+   * @param x x (screen) coordinate of centre cell in grid
+   * @param y y (screen) coordinate of centre cell in grid
+   * @return The number of alive cells adjacent to index [grid_x][grid_y]
+   */
+  int countSurroundingAlive(int x, int y);
 
   int width, height, cell_size, border_size;
 

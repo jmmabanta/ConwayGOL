@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "cell.h"
+#include "coordinates.h"
 
 Grid::Grid(std::shared_ptr<SDL_Renderer> renderer, int width, int height,
            int cell_size, int border_size)
@@ -56,6 +57,9 @@ void Grid::handleMouseClick(const SDL_Event& e) {
     // Toggle cell
     Cell& cell = getCell(x, y);
     cell.toggleAlive();
+
+    // Count how many alive adjacent to it
+    std::cout << "# of alive adjacent: " << countSurroundingAlive(x, y) << '\n';
   }
 }
 
@@ -80,7 +84,32 @@ void Grid::render() const {
   }
 }
 
+Coordinates Grid::getGridCoord(int x, int y) {
+  return {x / (cell_size + border_size), y / (cell_size + border_size)};
+}
+
 Cell& Grid::getCell(int x, int y) {
-  return cell_grid[x / (cell_size + border_size)]
-                  [y / (cell_size + border_size)];
+  Coordinates grid_coords = getGridCoord(x, y);
+  return cell_grid[grid_coords.x][grid_coords.y];
+}
+
+int Grid::countSurroundingAlive(int x, int y) {
+  int count = 0;
+  Coordinates grid_coords = getGridCoord(x, y);
+  int grid_x = grid_coords.x;
+  int grid_y = grid_coords.y;
+
+  // Loop over offsets
+  for (int i = -1; i <= 1; ++i) {
+    for (int j = -1; j <= 1; ++j) {
+      if (i == 0 && j == 0) continue;  // Ignore centre
+      int adj_x = grid_x + j;
+      int adj_y = grid_y + i;
+      if (adj_x >= 0 && adj_x < cell_grid.size() && adj_y >= 0 &&
+          adj_y < cell_grid[grid_x].size() &&
+          cell_grid[adj_x][adj_y].getIsAlive())
+        ++count;
+    }
+  }
+  return count;
 }
