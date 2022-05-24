@@ -18,6 +18,8 @@ set(INCLUDE_DIRECTORIES
   ${SDL2_INCLUDE_DIRS}
   ${SDL2_IMAGE_INCLUDE_DIRS}
   ${OPENGL_INCLUDE_DIRS}
+  src/
+  src/grid/
 )
 
 set(LINK_LIBRARIES
@@ -26,17 +28,20 @@ set(LINK_LIBRARIES
   ${OPENGL_LIBRARIES}
 )
 
-include_directories(ConwayGOL ${INCLUDE_DIRECTORIES})
-
 set(SOURCES
   src/main.cc
   src/game.cc
+  src/game.h
   src/grid/cell.cc
+  src/grid/cell.h
   src/grid/grid.cc
+  src/grid/grid.h
+  src/grid/coordinates.h
 )
 
-add_executable(ConwayGOL ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(ConwayGOL ${LINK_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_DIRECTORIES})
+target_link_libraries(${PROJECT_NAME} ${LINK_LIBRARIES})
 
 include(CPack)
