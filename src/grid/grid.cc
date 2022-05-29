@@ -95,7 +95,7 @@ void Grid::update() {
       if (cell->getIsAlive() && (count < 2 || count > 3))
         to_update.insert(cell);
       // A dead cell lives if it has exactly 3 living neighbors
-      else if (count == 3)
+      else if (!cell->getIsAlive() && count == 3)
         to_update.insert(cell);
     }
 
