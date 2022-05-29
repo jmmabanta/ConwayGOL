@@ -103,6 +103,8 @@ void Grid::update() {
     for (auto& cell : to_update) {
       toggleCell(*cell);
     }
+
+    SDL_Delay(50);
   }
 }
 
