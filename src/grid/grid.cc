@@ -54,10 +54,6 @@ void Grid::handleMouseClick(const SDL_Event& e) {
     // Toggle cell
     Cell& cell = getCell(x, y);
     toggleCell(cell);
-
-    // Count how many alive adjacent to it
-    std::cout << "# of alive adjacent: " << countSurroundingAlive(cell) << '\n';
-    std::cout << "# of alive TOTAL: " << alive_cells.size() << '\n';
   }
 }
 
