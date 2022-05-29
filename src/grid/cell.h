@@ -12,6 +12,7 @@ const Uint8 DEAD_COL = 255;
 
 class Cell {
  public:
+  Cell();
   Cell(bool is_alive, int x, int y, int size,
        std::shared_ptr<SDL_Renderer> renderer);
   Cell(int x, int y, int size, std::shared_ptr<SDL_Renderer> renderer);

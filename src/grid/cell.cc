@@ -6,6 +6,13 @@
 
 #include "coordinates.h"
 
+Cell::Cell()
+    : is_alive(false),
+      coordinates({0, 0}),
+      size(0),
+      renderer(nullptr),
+      rect({0, 0, 0, 0}) {}
+
 Cell::Cell(bool is_alive, int x, int y, int size,
            std::shared_ptr<SDL_Renderer> renderer)
     : is_alive(is_alive),

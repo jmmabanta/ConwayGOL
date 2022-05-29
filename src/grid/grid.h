@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 
 #include <memory>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "cell.h"
@@ -70,13 +72,19 @@ class Grid {
   Cell& getCell(int x, int y);
 
   /**
+   * @brief Toggles a cell's status, updating alive_cells
+   *
+   * @param cell A reference to the cell being toggled
+   */
+  void toggleCell(Cell& cell);
+
+  /**
    * @brief Counts the number of alive cells adjacent to a cell
    *
-   * @param x x (screen) coordinate of centre cell in grid
-   * @param y y (screen) coordinate of centre cell in grid
+   * @param cell A reference to the centre cell
    * @return The number of alive cells adjacent to index [grid_x][grid_y]
    */
-  int countSurroundingAlive(int x, int y);
+  int countSurroundingAlive(Cell& cell);
 
   int width, height, cell_size, border_size;
 
@@ -84,6 +92,12 @@ class Grid {
 
   int num_cells_x, num_cells_y;
   std::vector<std::vector<Cell>> cell_grid;
+
+  // A reverse mapping that maps a cell to its grid indices
+  std::unordered_map<Cell*, Coordinates> cell_grid_indices;
+
+  // Set of all alive_cells, used for optimizing which cells are checked
+  std::unordered_set<Cell*> alive_cells;
 
   std::shared_ptr<SDL_Renderer> renderer;
 };

@@ -66,7 +66,7 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-  // TODO: Implement this
+  grid->update();
 }
 
 void Game::render() {
