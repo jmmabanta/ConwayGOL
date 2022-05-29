@@ -41,6 +41,9 @@ set(SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
+set_property(TARGET ${PROJECT_NAME}
+             PROPERTY CXX_STANDARD 17)
+
 target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_DIRECTORIES})
 target_link_libraries(${PROJECT_NAME} ${LINK_LIBRARIES})
 
